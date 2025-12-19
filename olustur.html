@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sürpriz Oluşturucu ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #333; margin-bottom: 20px; }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #764ba2;
+            outline: none;
+        }
+        button {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.05); background: #5b3a7d; }
+        
+        #result-area {
+            display: none;
+            margin-top: 20px;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        #generated-link {
+            word-break: break-all;
+            color: #764ba2;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .copy-btn {
+            background: #2ecc71;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🎉 Sürpriz Hazırla</h2>
+        <p>Kutlamak istediğin kişinin bilgilerini gir.</p>
+        
+        <input type="text" id="nameInput" placeholder="Kimin Doğum Günü? (Örn: Alanur)">
+        <textarea id="noteInput" rows="4" placeholder="Kutlama Mesajın (Örn: İyi ki varsın...)"></textarea>
+        
+        <button onclick="createLink()">Linki Oluştur 🪄</button>
+
+        <div id="result-area">
+            <p>👇 Bu linki kopyala ve ona gönder:</p>
+            <a id="generated-link" href="#" target="_blank">...</a>
+            <button class="copy-btn" onclick="copyLink()">Linki Kopyala 📋</button>
+        </div>
+    </div>
+
+    <script>
+        function createLink() {
+            const name = document.getElementById('nameInput').value.trim();
+            const note = document.getElementById('noteInput').value.trim();
+
+            if(!name || !note) {
+                alert("Lütfen isim ve mesaj yaz!");
+                return;
+            }
+
+            // kutla.html dosyasının aynı klasörde olduğunu varsayıyoruz
+            // URL parametreleri oluştur (Türkçe karakterleri koda çevirir)
+            const params = new URLSearchParams();
+            params.set('ad', name);
+            params.set('not', note);
+
+            // Şu anki sayfanın adresini al, 'olustur.html' kısmını 'kutla.html' yap
+            let baseUrl = window.location.href.replace('olustur.html', 'kutla.html');
+            // Eğer dosya adı URL'de yoksa (klasör ise) sonuna ekle
+            if (!baseUrl.includes('kutla.html')) {
+                // Basit bir kontrol, genelde replace yeterli olur ama garanti olsun
+                if(baseUrl.endsWith('/')) baseUrl += 'kutla.html';
+                else baseUrl += '/kutla.html';
+            }
+
+            const finalLink = `${baseUrl}?${params.toString()}`;
+
+            const linkElem = document.getElementById('generated-link');
+            linkElem.href = finalLink;
+            linkElem.innerText = finalLink;
+
+            document.getElementById('result-area').style.display = 'block';
+        }
+
+        function copyLink() {
+            const linkText = document.getElementById('generated-link').href;
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert("Link kopyalandı! Şimdi arkadaşına atabilirsin. 🚀");
+            });
+        }
+    </script>
+</body>
+</html>

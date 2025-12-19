@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sürpriz Kutlama!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap');
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle, #2b1055, #7597de);
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: popIn 1s ease;
+        }
+
+        .cake {
+            font-size: 5rem;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: float 3s infinite ease-in-out;
+        }
+        .cake:active { transform: scale(0.9); }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s 0.5s forwards;
+        }
+
+        .note-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff0055;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="content">
+        <h1 id="bday-title">Yükleniyor...</h1>
+        <div class="cake" onclick="explode()">🎂</div>
+        <div class="card">
+            <p id="bday-note" class="note-text">...</p>
+        </div>
+        
+        <br>
+        <a href="olustur.html" class="btn">Sen de birine sürpriz yap! 🎁</a>
+    </div>
+
+    <script>
+        // 1. URL'den bilgileri al
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('ad');
+        const note = params.get('not');
+
+        // 2. Eğer bilgi yoksa ana sayfaya at (Hata önleme)
+        if (!name) {
+            document.getElementById('bday-title').innerText = "Hatalı Link 😢";
+            document.getElementById('bday-note').innerText = "Lütfen linki doğru aldığından emin ol.";
+        } else {
+            // 3. Bilgileri Ekrana Yaz
+            document.getElementById('bday-title').innerHTML = `İyi ki Doğdun<br>${name}! 🎉`;
+            document.getElementById('bday-note').innerText = `"${note}"`;
+            
+            // Otomatik Konfeti Başlat
+            setTimeout(explode, 500);
+        }
+
+        function explode() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff0055', '#ffdd00', '#00ddff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff0055', '#ffdd00', '#00ddff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+
+</body>
+</html>
