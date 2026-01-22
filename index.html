@@ -52,7 +52,7 @@
             transition: 0.3s;
         }
         button:hover { transform: scale(1.05); background: #5b3a7d; }
-        
+
         #result-area {
             display: none;
             margin-top: 20px;
@@ -79,10 +79,10 @@
     <div class="card">
         <h2>🎉 Sürpriz Hazırla</h2>
         <p>Kutlamak istediğin kişinin bilgilerini gir.</p>
-        
+
         <input type="text" id="nameInput" placeholder="Kimin Doğum Günü? (Örn: Alanur)">
         <textarea id="noteInput" rows="4" placeholder="Kutlama Mesajın (Örn: İyi ki varsın...)"></textarea>
-        
+
         <button onclick="createLink()">Linki Oluştur 🪄</button>
 
         <div id="result-area">
@@ -102,22 +102,31 @@
                 return;
             }
 
-            // kutla.html dosyasının aynı klasörde olduğunu varsayıyoruz
-            // URL parametreleri oluştur (Türkçe karakterleri koda çevirir)
+            // URL parametreleri oluştur
             const params = new URLSearchParams();
             params.set('ad', name);
             params.set('not', note);
 
-            // Şu anki sayfanın adresini al, 'olustur.html' kısmını 'kutla.html' yap
-            let baseUrl = window.location.href.replace('olustur.html', 'kutla.html');
-            // Eğer dosya adı URL'de yoksa (klasör ise) sonuna ekle
-            if (!baseUrl.includes('kutla.html')) {
-                // Basit bir kontrol, genelde replace yeterli olur ama garanti olsun
-                if(baseUrl.endsWith('/')) baseUrl += 'kutla.html';
-                else baseUrl += '/kutla.html';
-            }
+            /* ========================================================
+               👇 BURASI DEĞİŞTİRİLDİ (HATAYI ÇÖZEN KISIM) 👇
+               ======================================================== */
+            
+            // 1. Adres satırındaki URL'yi al ve ? işaretinden sonrasını (varsa) temizle
+            let currentUrl = window.location.href.split('?')[0];
 
-            const finalLink = `${baseUrl}?${params.toString()}`;
+            // 2. URL'deki son eğik çizginin (/) nerede olduğunu bul
+            let lastSlashIndex = currentUrl.lastIndexOf('/');
+
+            // 3. URL'yi baştan o çizgiye kadar kes (Böylece klasör yolunu almış oluruz)
+            // Örnek: "site.com/index.html" ise elimizde "site.com/" kalır.
+            let folderUrl = currentUrl.substring(0, lastSlashIndex + 1);
+
+            // 4. Klasör yolunun sonuna "kutla.html" ve parametreleri ekle
+            const finalLink = `${folderUrl}kutla.html?${params.toString()}`;
+
+            /* ========================================================
+               👆 DEĞİŞİKLİK BİTTİ 👆
+               ======================================================== */
 
             const linkElem = document.getElementById('generated-link');
             linkElem.href = finalLink;
