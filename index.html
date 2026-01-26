@@ -39,6 +39,14 @@
             border-color: #764ba2;
             outline: none;
         }
+        label {
+            display: block;
+            text-align: left;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+            margin-left: 5px;
+        }
         button {
             background: #764ba2;
             color: white;
@@ -81,7 +89,11 @@
         <p>Kutlamak istediğin kişinin bilgilerini gir.</p>
 
         <input type="text" id="nameInput" placeholder="Kimin Doğum Günü? (Örn: Alanur)">
-        <textarea id="noteInput" rows="4" placeholder="Kutlama Mesajın (Örn: İyi ki varsın...)"></textarea>
+        
+        <label for="dateInput">Doğum Tarihi:</label>
+        <input type="date" id="dateInput">
+
+        <textarea id="noteInput" rows="3" placeholder="Kutlama Mesajın (Örn: İyi ki varsın...)"></textarea>
 
         <button onclick="createLink()">Linki Oluştur 🪄</button>
 
@@ -96,37 +108,23 @@
         function createLink() {
             const name = document.getElementById('nameInput').value.trim();
             const note = document.getElementById('noteInput').value.trim();
+            const date = document.getElementById('dateInput').value;
 
-            if(!name || !note) {
-                alert("Lütfen isim ve mesaj yaz!");
+            if(!name || !note || !date) {
+                alert("Lütfen tüm alanları (isim, tarih ve mesaj) doldur!");
                 return;
             }
 
-            // URL parametreleri oluştur
             const params = new URLSearchParams();
             params.set('ad', name);
             params.set('not', note);
+            params.set('tarih', date); // Tarihi de ekledik
 
-            /* ========================================================
-               👇 BURASI DEĞİŞTİRİLDİ (HATAYI ÇÖZEN KISIM) 👇
-               ======================================================== */
-            
-            // 1. Adres satırındaki URL'yi al ve ? işaretinden sonrasını (varsa) temizle
             let currentUrl = window.location.href.split('?')[0];
-
-            // 2. URL'deki son eğik çizginin (/) nerede olduğunu bul
             let lastSlashIndex = currentUrl.lastIndexOf('/');
-
-            // 3. URL'yi baştan o çizgiye kadar kes (Böylece klasör yolunu almış oluruz)
-            // Örnek: "site.com/index.html" ise elimizde "site.com/" kalır.
             let folderUrl = currentUrl.substring(0, lastSlashIndex + 1);
 
-            // 4. Klasör yolunun sonuna "kutla.html" ve parametreleri ekle
             const finalLink = `${folderUrl}kutla.html?${params.toString()}`;
-
-            /* ========================================================
-               👆 DEĞİŞİKLİK BİTTİ 👆
-               ======================================================== */
 
             const linkElem = document.getElementById('generated-link');
             linkElem.href = finalLink;
