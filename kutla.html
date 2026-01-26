@@ -65,20 +65,44 @@
             padding-bottom: 15px;
         }
 
-        /* Ünlülerin görüneceği özel alan */
+        /* Ünlülerin Kutusu */
         .celeb-box {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             padding: 15px;
             border-radius: 12px;
-            font-size: 0.9rem;
+            text-align: left;
         }
         .celeb-title {
             display: block;
+            text-align: center;
             font-weight: 600;
-            color: #ffd700; /* Altın sarısı */
-            margin-bottom: 5px;
+            color: #ffd700;
+            margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        /* Liste Tasarımı */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        li:last-child { border-bottom: none; }
+        .celeb-year {
+            color: #ccc;
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
@@ -114,7 +138,8 @@
             
             <div class="celeb-box">
                 <span class="celeb-title">✨ Seninle Aynı Gün Doğanlar ✨</span>
-                <div id="unluListesi">Araştırılıyor...</div>
+                <ul id="unluListesi">
+                    </ul>
             </div>
         </div>
         
@@ -123,7 +148,6 @@
     </div>
 
     <script>
-        // Sayfa açıldığında konfeti patlat
         window.onload = () => {
             explode();
             verileriYukle();
@@ -144,33 +168,77 @@
             const mesaj = urlParams.get('not') || "Nice mutlu yıllara!";
             const dogumTarihi = urlParams.get('tarih'); 
 
-            // Başlık ve mesajı yazdır
             document.getElementById('bday-title').innerText = `İyi ki Doğdun ${isim}! 🥳`;
             document.getElementById('bday-note').innerText = mesaj;
 
+            // --- ÜNLÜ VERİTABANI ---
+            // Buraya istediğin kadar tarih ekleyebilirsin. Format: "Ay-Gün"
+            const unlulerDb = {
+                "01-01": [
+                    { name: "Barış Manço", year: 1943 },
+                    { name: "İbrahim Tatlıses", year: 1952 },
+                    { name: "Michele Mercier", year: 1939 },
+                    { name: "Latife Tekin", year: 1957 },
+                    { name: "J.D. Salinger", year: 1919 }
+                ],
+                "05-19": [
+                    { name: "Mustafa Kemal Atatürk", year: 1881 },
+                    { name: "Özkan Uğur", year: 1953 },
+                    { name: "Malcolm X", year: 1925 },
+                    { name: "Grace Jones", year: 1948 },
+                    { name: "Andrea Pirlo", year: 1979 }
+                ],
+                "09-09": [
+                    { name: "Lev Tolstoy", year: 1828 },
+                    { name: "Adam Sandler", year: 1966 },
+                    { name: "Hugh Grant", year: 1960 },
+                    { name: "Luka Modrić", year: 1985 },
+                    { name: "Fatih Terim", year: 1953 } // Temsili
+                ],
+                "10-29": [
+                    { name: "Necmettin Erbakan", year: 1926 },
+                    { name: "Winona Ryder", year: 1971 },
+                    { name: "Richard Dreyfuss", year: 1947 },
+                    { name: "Abdullah Gül", year: 1950 },
+                    { name: "Edwin van der Sar", year: 1970 }
+                ]
+            };
+
+            // Eğer veritabanında o tarih yoksa gösterilecek YEDEK LİSTE (Boş kalmasın diye)
+            const yedekListe = [
+                { name: "Sen (Bir Efsane)", year: dogumTarihi ? dogumTarihi.split('-')[0] : "???? " },
+                { name: "Albert Einstein", year: 1879 },
+                { name: "Mozart", year: 1756 },
+                { name: "Leonardo da Vinci", year: 1452 },
+                { name: "Madonna", year: 1958 }
+            ];
+
+            const ulElement = document.getElementById('unluListesi');
+            ulElement.innerHTML = ""; // Listeyi temizle
+
             if (dogumTarihi) {
-                // Tarihten "Ay-Gün" kısmını al (Örn: "05-19")
-                const ayGun = dogumTarihi.split('-').slice(1).join('-'); 
+                // Tarihi "YYYY-MM-DD" formatından "MM-DD" formatına çevir
+                // .slice(5) methodu ilk 5 karakteri (2025-) atar, geriye 05-19 kalır.
+                const ayGun = dogumTarihi.slice(5); 
 
-                // Örnek Ünlü Veritabanı
-                const unluler = {
-                    "01-01": ["Barış Manço", "Fatih Terim"],
-                    "02-26": ["Recep Tayyip Erdoğan", "Ahmet Özhan"],
-                    "03-14": ["Albert Einstein", "Ayla Algan"],
-                    "04-23": ["William Shakespeare"],
-                    "05-19": ["Mustafa Kemal Atatürk", "Özkan Uğur"],
-                    "07-10": ["Nikola Tesla", "Yıldız Tilbe"],
-                    "08-30": ["Cameron Diaz", "Gülben Ergen"],
-                    "10-29": ["Cumhuriyetimiz!", "Florence Nightingale"],
-                    "11-24": ["Halit Ergenç"],
-                    "12-31": ["Anthony Hopkins"]
-                    // İstediğin kadar tarihi buraya ekleyebilirsin
-                };
+                // O gün doğanları bul, yoksa yedek listeyi kullan
+                let bulunanlar = unlulerDb[ayGun];
+                
+                // Eğer veri yoksa başlığı değiştir ve yedekleri göster
+                if (!bulunanlar) {
+                    document.querySelector('.celeb-title').innerText = "✨ Tarihteki Diğer Efsaneler ✨";
+                    bulunanlar = yedekListe;
+                }
 
-                const bugunDoganlar = unluler[ayGun] || ["Senin gibi eşsiz bir kahraman!"];
-                document.getElementById('unluListesi').innerText = bugunDoganlar.join(", ");
+                // Listeyi ekrana yazdır
+                bulunanlar.forEach(kisi => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${kisi.name}</span> <span class="celeb-year">${kisi.year}</span>`;
+                    ulElement.appendChild(li);
+                });
+
             } else {
-                document.getElementById('unluListesi').innerText = "Tarih bilgisi girilmemiş.";
+                ulElement.innerHTML = "<li>Tarih bilgisi bulunamadı.</li>";
             }
         }
     </script>
