@@ -90,51 +90,25 @@
         <a href="index.html" class="btn">Sen de birine sürpriz yap! 🎁</a>
     </div>
 
-    <script>
-        // 1. URL'den bilgileri al
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('ad');
-        const note = params.get('not');
+    // URL'den verileri al
+const urlParams = new URLSearchParams(window.location.search);
+const dogumTarihi = urlParams.get('tarih'); // "1995-05-19" gibi gelir
 
-        // 2. Eğer bilgi yoksa ana sayfaya at (Hata önleme)
-        if (!name) {
-            document.getElementById('bday-title').innerText = "Hatalı Link 😢";
-            document.getElementById('bday-note').innerText = "Lütfen linki doğru aldığından emin ol.";
-        } else {
-            // 3. Bilgileri Ekrana Yaz
-            document.getElementById('bday-title').innerHTML = `İyi ki Doğdun<br>${name}! 🎉`;
-            document.getElementById('bday-note').innerText = `"${note}"`;
-            
-            // Otomatik Konfeti Başlat
-            setTimeout(explode, 500);
-        }
+// Tarihten sadece Ay-Gün kısmını alalım
+const ayGun = dogumTarihi.split('-').slice(1).join('-'); // "05-19" kalır
 
-        function explode() {
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
+// Küçük bir ünlü veritabanı örneği (Bunu büyütebilirsin)
+const unluler = {
+    "05-19": ["Mustafa Kemal Atatürk", "Özkan Uğur"],
+    "10-29": ["Cumhuriyetimiz", "Florence Nightingale"],
+    "01-01": ["Barış Manço"],
+    // Buraya daha fazla tarih ekleyebilirsin
+};
 
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#ff0055', '#ffdd00', '#00ddff']
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#ff0055', '#ffdd00', '#00ddff']
-                });
+const bugunDoganlar = unluler[ayGun] || ["Harika bir insan (Sen!)"];
 
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-        }
-    </script>
+// Ekranda bir yere yazdır
+document.getElementById('unluListesi').innerText = "Seninle aynı gün doğan bazı ünlüler: " + bugunDoganlar.join(", ");
 
 </body>
 </html>
