@@ -65,7 +65,6 @@
             padding-bottom: 15px;
         }
 
-        /* Ünlülerin Kutusu */
         .celeb-box {
             background: rgba(0, 0, 0, 0.3);
             padding: 15px;
@@ -83,18 +82,14 @@
             font-size: 0.9rem;
         }
         
-        /* Liste Tasarımı */
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+        ul { list-style-type: none; padding: 0; margin: 0; }
         li {
             padding: 8px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             font-size: 0.95rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
         li:last-child { border-bottom: none; }
         .celeb-year {
@@ -103,7 +98,11 @@
             background: rgba(255,255,255,0.1);
             padding: 2px 8px;
             border-radius: 10px;
+            margin-left: 10px;
+            min-width: 45px;
+            text-align: center;
         }
+        .loading { text-align: center; font-style: italic; color: #ddd; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -139,7 +138,8 @@
             <div class="celeb-box">
                 <span class="celeb-title">✨ Seninle Aynı Gün Doğanlar ✨</span>
                 <ul id="unluListesi">
-                    </ul>
+                    <li class="loading">Tarih kitapları taranıyor... 📖</li>
+                </ul>
             </div>
         </div>
         
@@ -171,74 +171,57 @@
             document.getElementById('bday-title').innerText = `İyi ki Doğdun ${isim}! 🥳`;
             document.getElementById('bday-note').innerText = mesaj;
 
-            // --- ÜNLÜ VERİTABANI ---
-            // Buraya istediğin kadar tarih ekleyebilirsin. Format: "Ay-Gün"
-            const unlulerDb = {
-                "01-01": [
-                    { name: "Barış Manço", year: 1943 },
-                    { name: "İbrahim Tatlıses", year: 1952 },
-                    { name: "Michele Mercier", year: 1939 },
-                    { name: "Latife Tekin", year: 1957 },
-                    { name: "J.D. Salinger", year: 1919 }
-                ],
-                "05-19": [
-                    { name: "Mustafa Kemal Atatürk", year: 1881 },
-                    { name: "Özkan Uğur", year: 1953 },
-                    { name: "Malcolm X", year: 1925 },
-                    { name: "Grace Jones", year: 1948 },
-                    { name: "Andrea Pirlo", year: 1979 }
-                ],
-                "09-09": [
-                    { name: "Lev Tolstoy", year: 1828 },
-                    { name: "Adam Sandler", year: 1966 },
-                    { name: "Hugh Grant", year: 1960 },
-                    { name: "Luka Modrić", year: 1985 },
-                    { name: "Fatih Terim", year: 1953 } // Temsili
-                ],
-                "10-29": [
-                    { name: "Necmettin Erbakan", year: 1926 },
-                    { name: "Winona Ryder", year: 1971 },
-                    { name: "Richard Dreyfuss", year: 1947 },
-                    { name: "Abdullah Gül", year: 1950 },
-                    { name: "Edwin van der Sar", year: 1970 }
-                ]
-            };
-
-            // Eğer veritabanında o tarih yoksa gösterilecek YEDEK LİSTE (Boş kalmasın diye)
-            const yedekListe = [
-                { name: "Sen (Bir Efsane)", year: dogumTarihi ? dogumTarihi.split('-')[0] : "???? " },
-                { name: "Albert Einstein", year: 1879 },
-                { name: "Mozart", year: 1756 },
-                { name: "Leonardo da Vinci", year: 1452 },
-                { name: "Madonna", year: 1958 }
-            ];
-
-            const ulElement = document.getElementById('unluListesi');
-            ulElement.innerHTML = ""; // Listeyi temizle
-
             if (dogumTarihi) {
-                // Tarihi "YYYY-MM-DD" formatından "MM-DD" formatına çevir
-                // .slice(5) methodu ilk 5 karakteri (2025-) atar, geriye 05-19 kalır.
-                const ayGun = dogumTarihi.slice(5); 
+                // Tarihi parçala (YYYY-MM-DD -> Ay ve Gün al)
+                const parts = dogumTarihi.split('-');
+                const ay = parts[1];
+                const gun = parts[2];
+                const dogumYili = parts[0];
 
-                // O gün doğanları bul, yoksa yedek listeyi kullan
-                let bulunanlar = unlulerDb[ayGun];
-                
-                // Eğer veri yoksa başlığı değiştir ve yedekleri göster
-                if (!bulunanlar) {
-                    document.querySelector('.celeb-title').innerText = "✨ Tarihteki Diğer Efsaneler ✨";
-                    bulunanlar = yedekListe;
-                }
+                // Wikipedia'dan veri çek
+                fetchWikipediaData(ay, gun, dogumYili);
+            } else {
+                document.getElementById('unluListesi').innerHTML = "<li>Tarih bilgisi girilmedi.</li>";
+            }
+        }
 
-                // Listeyi ekrana yazdır
-                bulunanlar.forEach(kisi => {
+        async function fetchWikipediaData(month, day, userYear) {
+            const ulElement = document.getElementById('unluListesi');
+            
+            try {
+                // Wikipedia API'sine istek at (Türkçe)
+                const response = await fetch(`https://tr.wikipedia.org/api/rest_v1/feed/onthisday/births/${month}/${day}`);
+                const data = await response.json();
+
+                ulElement.innerHTML = ""; // Yükleniyor yazısını sil
+
+                // En üst satıra doğum günü çocuğunu ekle
+                const userLi = document.createElement('li');
+                userLi.innerHTML = `<span style="font-weight:bold; color:#fff;">Sen (Bir Efsane)</span> <span class="celeb-year" style="background:#ff0055">${userYear}</span>`;
+                ulElement.appendChild(userLi);
+
+                // Wikipedia'dan gelen listeyi karıştır ve ilk 5 kişiyi al
+                // (Listeyi karıştırıyoruz ki her seferinde en eskiler çıkmasın)
+                const births = data.births.sort(() => 0.5 - Math.random()).slice(0, 5);
+
+                births.forEach(person => {
                     const li = document.createElement('li');
-                    li.innerHTML = `<span>${kisi.name}</span> <span class="celeb-year">${kisi.year}</span>`;
+                    // İsim uzunsa kısaltma yapmayalım, sığar.
+                    li.innerHTML = `<span>${person.text}</span> <span class="celeb-year">${person.year}</span>`;
                     ulElement.appendChild(li);
                 });
 
-            } else {
-                ulElement.innerHTML = "<li>Tarih bilgisi bulunamadı.</li>";
+                if(births.length === 0) {
+                     ulElement.innerHTML += "<li>Bugün doğan ünlü kaydı bulunamadı.</li>";
+                }
+
+            } catch (error) {
+                console.error("Wikipedia hatası:", error);
+                // Eğer internet yoksa veya hata olursa bu yedek listeyi göster
+                ulElement.innerHTML = `
+                    <li>Sen (Bir Efsane) <span class="celeb-year">${userYear}</span></li>
+                    <li>Veri çekilemedi (İnternet bağlantısı?) <span class="celeb-year">:(</span></li>
+                `;
             }
         }
     </script>
