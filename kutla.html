@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sürpriz Kutlama!</title>
+    <title>Sürpriz Kutlama! ✨</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap');
@@ -11,7 +11,7 @@
         body {
             margin: 0;
             background: radial-gradient(circle, #2b1055, #7597de);
-            height: 100vh;
+            min-height: 100vh;
             color: white;
             display: flex;
             flex-direction: column;
@@ -19,33 +19,36 @@
             justify-content: center;
             font-family: 'Poppins', sans-serif;
             text-align: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 3rem;
-            margin: 0;
+            font-size: 2.5rem;
+            margin: 10px 0;
             text-shadow: 0 5px 15px rgba(0,0,0,0.3);
             animation: popIn 1s ease;
         }
 
         .cake {
             font-size: 5rem;
-            margin: 20px 0;
+            margin: 10px 0;
             cursor: pointer;
             transition: transform 0.2s;
             animation: float 3s infinite ease-in-out;
+            user-select: none;
         }
         .cake:active { transform: scale(0.9); }
 
         .card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
-            margin-top: 20px;
-            width: 80%;
+            margin-top: 15px;
+            width: 100%;
             max-width: 500px;
             border: 1px solid rgba(255,255,255,0.2);
             opacity: 0;
@@ -54,9 +57,28 @@
         }
 
         .note-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.6;
             font-style: italic;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        /* Ünlülerin görüneceği özel alan */
+        .celeb-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+        .celeb-title {
+            display: block;
+            font-weight: 600;
+            color: #ffd700; /* Altın sarısı */
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
@@ -64,51 +86,93 @@
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
         .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
+            margin-top: 25px;
+            display: inline-block;
+            padding: 12px 25px;
             background: #ff0055;
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
             font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.3s;
         }
+        .btn:hover { background: #ff3377; transform: scale(1.05); }
 
     </style>
 </head>
 <body>
 
     <div id="content">
-        <h1 id="bday-title">Yükleniyor...</h1>
+        <h1 id="bday-title">İyi ki Doğdun!</h1>
         <div class="cake" onclick="explode()">🎂</div>
+        
         <div class="card">
-            <p id="bday-note" class="note-text">...</p>
+            <p id="bday-note" class="note-text">Mesaj yükleniyor...</p>
+            
+            <div class="celeb-box">
+                <span class="celeb-title">✨ Seninle Aynı Gün Doğanlar ✨</span>
+                <div id="unluListesi">Araştırılıyor...</div>
+            </div>
         </div>
         
         <br>
         <a href="index.html" class="btn">Sen de birine sürpriz yap! 🎁</a>
     </div>
 
-    // URL'den verileri al
-const urlParams = new URLSearchParams(window.location.search);
-const dogumTarihi = urlParams.get('tarih'); // "1995-05-19" gibi gelir
+    <script>
+        // Sayfa açıldığında konfeti patlat
+        window.onload = () => {
+            explode();
+            verileriYukle();
+        };
 
-// Tarihten sadece Ay-Gün kısmını alalım
-const ayGun = dogumTarihi.split('-').slice(1).join('-'); // "05-19" kalır
+        function explode() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff0055', '#7597de', '#ffffff', '#ffd700']
+            });
+        }
 
-// Küçük bir ünlü veritabanı örneği (Bunu büyütebilirsin)
-const unluler = {
-    "05-19": ["Mustafa Kemal Atatürk", "Özkan Uğur"],
-    "10-29": ["Cumhuriyetimiz", "Florence Nightingale"],
-    "01-01": ["Barış Manço"],
-    // Buraya daha fazla tarih ekleyebilirsin
-};
+        function verileriYukle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isim = urlParams.get('ad') || "Arkadaşım";
+            const mesaj = urlParams.get('not') || "Nice mutlu yıllara!";
+            const dogumTarihi = urlParams.get('tarih'); 
 
-const bugunDoganlar = unluler[ayGun] || ["Harika bir insan (Sen!)"];
+            // Başlık ve mesajı yazdır
+            document.getElementById('bday-title').innerText = `İyi ki Doğdun ${isim}! 🥳`;
+            document.getElementById('bday-note').innerText = mesaj;
 
-// Ekranda bir yere yazdır
-document.getElementById('unluListesi').innerText = "Seninle aynı gün doğan bazı ünlüler: " + bugunDoganlar.join(", ");
+            if (dogumTarihi) {
+                // Tarihten "Ay-Gün" kısmını al (Örn: "05-19")
+                const ayGun = dogumTarihi.split('-').slice(1).join('-'); 
 
+                // Örnek Ünlü Veritabanı
+                const unluler = {
+                    "01-01": ["Barış Manço", "Fatih Terim"],
+                    "02-26": ["Recep Tayyip Erdoğan", "Ahmet Özhan"],
+                    "03-14": ["Albert Einstein", "Ayla Algan"],
+                    "04-23": ["William Shakespeare"],
+                    "05-19": ["Mustafa Kemal Atatürk", "Özkan Uğur"],
+                    "07-10": ["Nikola Tesla", "Yıldız Tilbe"],
+                    "08-30": ["Cameron Diaz", "Gülben Ergen"],
+                    "10-29": ["Cumhuriyetimiz!", "Florence Nightingale"],
+                    "11-24": ["Halit Ergenç"],
+                    "12-31": ["Anthony Hopkins"]
+                    // İstediğin kadar tarihi buraya ekleyebilirsin
+                };
+
+                const bugunDoganlar = unluler[ayGun] || ["Senin gibi eşsiz bir kahraman!"];
+                document.getElementById('unluListesi').innerText = bugunDoganlar.join(", ");
+            } else {
+                document.getElementById('unluListesi').innerText = "Tarih bilgisi girilmemiş.";
+            }
+        }
+    </script>
 </body>
 </html>
