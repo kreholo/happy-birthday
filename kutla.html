@@ -1,458 +1,477 @@
-<!-- =================================================================
-     DOSYA 1: index.html (Sürpriz Hazırlama & Tema Ayar Sayfası)
-     ================================================================= -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7220337370405776"
+         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sürpriz Kartı Hazırla 🎁</title>
+    <title>Sürpriz Kutlama! ✨</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* TAŞMAYI VE SAĞA-SOLA KAYMAYI KESİN ENGELLEYEN SIFIRLAMA */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        :root {
-            --primary: #ff0055;
-            --primary-glow: rgba(255, 0, 85, 0.4);
-            --bg-base: #0f0c20;
-            --card-bg: rgba(255, 255, 255, 0.07);
-            --border-glass: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-sub: #cbd5e1;
-        }
-
-        html, body {
+        html {
             width: 100%;
-            min-height: 100%;
+            height: -webkit-fill-available;
             overflow-x: hidden;
-            background-color: var(--bg-base);
-            font-family: 'Outfit', sans-serif;
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 24px 16px;
+            -webkit-text-size-adjust: 100%;
         }
 
-        .ambient-glow {
-            position: fixed;
-            top: -10vw;
-            left: -10vw;
-            width: 50vw;
-            height: 50vw;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(117, 151, 222, 0.25) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .ambient-glow-2 {
-            position: fixed;
-            bottom: -15vw;
-            right: -10vw;
-            width: 60vw;
-            height: 60vw;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 0, 85, 0.2) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .container {
+        body {
             width: 100%;
-            max-width: 560px;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: 28px;
-            padding: 32px 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            padding: 24px 16px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #ffffff;
+            background: radial-gradient(circle at center, #2b1055, #100524, #05010e);
+            position: relative;
+            transition: background 0.6s ease;
+        }
+
+        /* Arka plan yıldız dokusu */
+        .stars-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 80px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 100px 50px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 170px 130px, #ffd700, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.35;
+            z-index: 0;
+        }
+
+        #content {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
             z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
         }
 
-        header {
-            text-align: center;
-        }
-
-        header h1 {
+        h1 {
             font-family: 'Pacifico', cursive;
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        header p {
-            font-size: 0.95rem;
-            color: var(--text-sub);
-            font-weight: 300;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            text-align: left;
-        }
-
-        label {
-            font-size: 0.88rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            color: #f1f5f9;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        textarea {
+            font-size: clamp(1.9rem, 6.5vw, 2.6rem);
+            margin: 10px 0 6px;
+            line-height: 1.3;
+            text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
             width: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
-            padding: 14px 16px;
-            color: #ffffff;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
-            transition: all 0.25s ease;
-            outline: none;
         }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        textarea:focus {
-            border-color: #ff0055;
-            box-shadow: 0 0 0 4px var(--primary-glow);
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 90px;
-            line-height: 1.5;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
+        .cake-container {
+            margin: 8px 0 14px;
+            display: inline-block;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Tema Seçim Paneli */
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 4px;
-        }
-
-        @media (min-width: 480px) {
-            .theme-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .theme-card {
-            border: 2px solid transparent;
-            border-radius: 14px;
-            padding: 10px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+        .cake {
+            font-size: clamp(4.5rem, 15vw, 5.5rem);
+            line-height: 1;
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 3s infinite ease-in-out;
             user-select: none;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
         }
 
-        .theme-card:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
+        .cake:active {
+            transform: scale(0.85);
         }
 
-        .theme-card.active {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
-        }
-
-        .theme-card.active::after {
-            content: "✓";
-            position: absolute;
-            top: 6px;
-            right: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #ffffff;
-            background: rgba(0,0,0,0.5);
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-preview {
-            width: 100%;
-            height: 38px;
-            border-radius: 9px;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-        }
-
-        .theme-name {
-            font-size: 0.78rem;
+        .cake-hint {
+            display: block;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: 600;
-            color: #e2e8f0;
+        }
+
+        /* Kart Yapısı */
+        .card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-top: 14px;
+            width: 100%;
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.45);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s 0.2s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .note-text {
+            font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+            line-height: 1.6;
+            font-style: italic;
+            color: #ffffff;
+            margin: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Aynı Gün Doğanlar Bölümü */
+        .celeb-box {
+            background: rgba(0, 0, 0, 0.32);
+            border-radius: 14px;
+            padding: 14px 12px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .celeb-title {
+            display: block;
             text-align: center;
-            white-space: nowrap;
-        }
-
-        /* Butonlar */
-        .btn-generate {
-            width: 100%;
-            background: linear-gradient(135deg, #ff0055, #ff557f);
-            color: #ffffff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 10px 25px -5px var(--primary-glow);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 4px;
-        }
-
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px -4px var(--primary-glow);
-        }
-
-        .btn-generate:active {
-            transform: scale(0.98);
-        }
-
-        /* Çıktı Kutusu */
-        .result-box {
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px dashed rgba(255, 255, 255, 0.25);
-            border-radius: 18px;
-            padding: 18px;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .link-display {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 10px 14px;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-size: 0.82rem;
-            color: #94a3b8;
-            word-break: break-all;
-            max-height: 75px;
-            overflow-y: auto;
         }
 
-        .action-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
         }
 
-        .btn-action {
+        li {
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.88rem;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .celeb-name {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .celeb-year {
+            flex-shrink: 0;
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 3px 8px;
+            border-radius: 10px;
+            min-width: 48px;
+            text-align: center;
+        }
+
+        /* Aksiyon Butonu */
+        .btn-create {
+            margin: 20px 0 6px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: 0.2s;
-            border: none;
+            padding: 13px 26px;
+            background: #ff0055;
             color: white;
-        }
-
-        .btn-copy {
-            background: rgba(255, 255, 255, 0.15);
-        }
-        .btn-copy:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .btn-preview {
-            background: #0ea5e9;
-        }
-        .btn-preview:hover {
-            background: #0284c7;
-        }
-
-        .btn-whatsapp {
-            grid-column: span 2;
-            background: #25d366;
-            color: #0b2914;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.92rem;
             font-weight: 700;
-        }
-        .btn-whatsapp:hover {
-            background: #20ba59;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 20px -3px rgba(255, 0, 85, 0.5);
+            transition: transform 0.2s, filter 0.2s;
+            animation: popIn 0.8s 0.5s backwards;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        .btn-create:hover {
+            transform: scale(1.03);
+            filter: brightness(1.08);
+        }
+
+        .btn-create:active {
+            transform: scale(0.96);
+        }
+
+        /* Reklam Alanı */
+        .ad-container {
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            border-radius: 14px;
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(2deg); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.06); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="ambient-glow"></div>
-    <div class="ambient-glow-2"></div>
+    <div class="stars-overlay"></div>
 
-    <main class="container">
-        <header>
-            <h1>Sürpriz Yap ✨</h1>
-            <p>Sevdiklerine özel temalı kutlama sayfası tasarla</p>
-        </header>
-
-        <div class="form-group">
-            <label for="inputAd">🎉 Kutlanacak Kişinin Adı</label>
-            <input type="text" id="inputAd" placeholder="Örn: Ayşe veya Can Dostum" autocomplete="off" />
+    <main id="content">
+        <h1 id="bday-title">İyi ki Doğdun!</h1>
+        
+        <div class="cake-container" onclick="patlat()">
+            <div class="cake">🎂</div>
+            <span class="cake-hint">Pastaya Tıkla! 👆</span>
         </div>
+        
+        <section class="card">
+            <p id="bday-note" class="note-text">Doğum günü mesajı yükleniyor...</p>
+        </section>
+        
+        <a href="index.html" class="btn-create" id="actionBtn">
+            Sen de birine sürpriz yap! 🎁
+        </a>
 
-        <div class="form-group">
-            <label for="inputTarih">📅 Doğum Tarihi (Gün/Ay/Yıl)</label>
-            <input type="date" id="inputTarih" />
-        </div>
-
-        <div class="form-group">
-            <label for="inputNot">💌 Özel Doğum Günü Notu</label>
-            <textarea id="inputNot" placeholder="Ona kalbinden geçen içten bir mesaj bırak..."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>🎨 Renk & Atmosfer Teması</label>
-            <div class="theme-grid" id="themeGrid">
-                <!-- Temalar Dinamik JS ile doldurulacak -->
-            </div>
-        </div>
-
-        <button type="button" class="btn-generate" onclick="linkiOlustur()">
-            <span>✨ Sürpriz Linkini Oluştur</span>
-        </button>
-
-        <section class="result-box" id="resultBox">
-            <div class="link-display" id="linkDisplay"></div>
-            <div class="action-row">
-                <button type="button" class="btn-action btn-copy" onclick="panoyaKopyala()" id="copyBtn">📋 Kopyala</button>
-                <a href="#" target="_blank" class="btn-action btn-preview" id="previewLink">👁️ Önizle</a>
-                <button type="button" class="btn-action btn-whatsapp" onclick="whatsapptaPaylas()">💬 WhatsApp ile Gönder</button>
+        <section class="card">
+            <div class="celeb-box">
+                <span class="celeb-title">✨ Seninle Aynı Gün Doğanlar ✨</span>
+                <ul id="unluListesi">
+                    <li style="justify-content: center; color: #cbd5e1; font-style: italic;">
+                        Tarih kayıtları taranıyor... 📖
+                    </li>
+                </ul>
             </div>
         </section>
     </main>
 
-    <script>
-        const themes = [
-            { id: "gece", name: "Kozmik Gece", bg: "radial-gradient(circle at center, #2b1055, #100524, #05010e)" },
-            { id: "gunbatimi", name: "Gün Batımı", bg: "linear-gradient(135deg, #4a0033, #8e0e00, #1f1c2c)" },
-            { id: "neon", name: "Siber Neon", bg: "linear-gradient(135deg, #090979, #00d4ff, #790974)" },
-            { id: "zumrut", name: "Zümrüt Büyüsü", bg: "linear-gradient(135deg, #052e16, #065f46, #047857)" },
-            { id: "seker", name: "Şeker Pembe", bg: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)" },
-            { id: "aurora", name: "Kutup Işığı", bg: "linear-gradient(135deg, #0b132b, #1c2541, #5bc0be)" }
-        ];
+    <!-- AdSense Reklam Alanı -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7220337370405776"
+             data-ad-slot="1613768173"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
-        let secilenTema = "gece";
-        let olusturulanUrl = "";
+    <script>
+        // index.html ile birebir eşleşen tema paletleri
+        const temaPaletleri = {
+            gece: {
+                bg: "radial-gradient(circle at center, #2b1055, #100524, #05010e)",
+                btn: "linear-gradient(135deg, #ff0055, #ff557f)",
+                btnGlow: "rgba(255, 0, 85, 0.5)",
+                userBadge: "#ff0055",
+                confetti: ['#ff0055', '#7597de', '#ffffff', '#ffd700']
+            },
+            gunbatimi: {
+                bg: "linear-gradient(135deg, #4a0033 0%, #8e0e00 50%, #1f1c2c 100%)",
+                btn: "linear-gradient(135deg, #ff416c, #ff4b2b)",
+                btnGlow: "rgba(255, 65, 108, 0.5)",
+                userBadge: "#ff416c",
+                confetti: ['#ff416c', '#ff4b2b', '#ffb199', '#f9d423']
+            },
+            neon: {
+                bg: "linear-gradient(135deg, #090979 0%, #000428 50%, #790974 100%)",
+                btn: "linear-gradient(135deg, #00d4ff, #0051ff)",
+                btnGlow: "rgba(0, 212, 255, 0.5)",
+                userBadge: "#00d4ff",
+                confetti: ['#00d4ff', '#00ff87', '#ff007f', '#ffffff']
+            },
+            zumrut: {
+                bg: "linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%)",
+                btn: "linear-gradient(135deg, #10b981, #059669)",
+                btnGlow: "rgba(16, 185, 129, 0.5)",
+                userBadge: "#10b981",
+                confetti: ['#10b981', '#34d399', '#fbbf24', '#ffffff']
+            },
+            seker: {
+                bg: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)",
+                btn: "linear-gradient(135deg, #ff007f, #7928ca)",
+                btnGlow: "rgba(255, 0, 127, 0.5)",
+                userBadge: "#ff007f",
+                confetti: ['#ff007f', '#7928ca', '#fcb045', '#00f2fe']
+            },
+            aurora: {
+                bg: "linear-gradient(135deg, #0b132b 0%, #1c2541 50%, #5bc0be 100%)",
+                btn: "linear-gradient(135deg, #48cae4, #0077b6)",
+                btnGlow: "rgba(72, 202, 228, 0.5)",
+                userBadge: "#5bc0be",
+                confetti: ['#5bc0be', '#6fffe9', '#ffffff', '#ffd166']
+            }
+        };
+
+        let aktifPalet = temaPaletleri.gece;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const grid = document.getElementById("themeGrid");
-            themes.forEach((t, i) => {
-                const card = document.createElement("div");
-                card.className = `theme-card ${t.id === secilenTema ? 'active' : ''}`;
-                card.onclick = () => temaSec(t.id);
-                card.innerHTML = `
-                    <div class="theme-preview" style="background: ${t.bg};"></div>
-                    <span class="theme-name">${t.name}</span>
-                `;
-                grid.appendChild(card);
-            });
+            verileriYukleVeUygula();
+            setTimeout(patlat, 350);
         });
 
-        function temaSec(temaId) {
-            secilenTema = temaId;
-            document.querySelectorAll(".theme-card").forEach((card, index) => {
-                card.classList.toggle("active", themes[index].id === temaId);
-            });
-        }
+        function verileriYukleVeUygula() {
+            const params = new URLSearchParams(window.location.search);
+            const isim = params.get('ad') || "Arkadaşım";
+            const mesaj = params.get('not') || "Nice mutlu, sağlıklı ve başarı dolu yaşlara!";
+            const tarih = params.get('tarih');
+            const temaKey = params.get('tema') || "gece";
 
-        function linkiOlustur() {
-            const ad = document.getElementById("inputAd").value.trim() || "Arkadaşım";
-            const not = document.getElementById("inputNot").value.trim() || "Yeni yaşında yüzünden tebessüm, kalbinden huzur hiç eksik olmasın. Mutlu yıllar!";
-            const tarih = document.getElementById("inputTarih").value;
+            // Temayı eşleştir ve aktar
+            if (temaPaletleri[temaKey]) {
+                aktifPalet = temaPaletleri[temaKey];
+            }
 
-            const url = new URL("kutlama.html", window.location.href);
-            url.searchParams.set("ad", ad);
-            url.searchParams.set("not", not);
-            url.searchParams.set("tema", secilenTema);
+            // Seçilen gradyan arka planı ve buton stilini uygula
+            document.body.style.background = aktifPalet.bg;
+            const actionBtn = document.getElementById('actionBtn');
+            actionBtn.style.background = aktifPalet.btn;
+            actionBtn.style.boxShadow = `0 8px 20px -3px ${aktifPalet.btnGlow}`;
+
+            document.getElementById('bday-title').innerText = `İyi ki Doğdun ${isim}! 🥳`;
+            document.getElementById('bday-note').innerText = mesaj;
+
             if (tarih) {
-                url.searchParams.set("tarih", tarih);
+                const parts = tarih.split('-');
+                if (parts.length === 3) {
+                    const yil = parts[0];
+                    const ay = String(parseInt(parts[1], 10));
+                    const gun = String(parseInt(parts[2], 10));
+                    fetchWikipediaData(ay, gun, yil);
+                    return;
+                }
             }
-
-            olusturulanUrl = url.toString();
-
-            document.getElementById("linkDisplay").innerText = olusturulanUrl;
-            document.getElementById("previewLink").href = olusturulanUrl;
-            document.getElementById("resultBox").style.display = "flex";
-            document.getElementById("resultBox").scrollIntoView({ behavior: 'smooth' });
+            
+            document.getElementById('unluListesi').innerHTML = `
+                <li style="justify-content: center; color: #cbd5e1;">Tarih seçilmediği için ortak ünlüler gösterilemiyor.</li>
+            `;
         }
 
-        async function panoyaKopyala() {
-            const copyBtn = document.getElementById("copyBtn");
+        function patlat() {
+            confetti({
+                particleCount: 130,
+                spread: 75,
+                origin: { y: 0.65 },
+                colors: aktifPalet.confetti
+            });
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 40,
+                    angle: 60,
+                    spread: 50,
+                    origin: { x: 0 },
+                    colors: aktifPalet.confetti
+                });
+                confetti({
+                    particleCount: 40,
+                    angle: 120,
+                    spread: 50,
+                    origin: { x: 1 },
+                    colors: aktifPalet.confetti
+                });
+            }, 200);
+        }
+
+        async function fetchWikipediaData(month, day, userYear) {
+            const ulElement = document.getElementById('unluListesi');
+            
             try {
-                await navigator.clipboard.writeText(olusturulanUrl);
-                copyBtn.innerText = "✓ Kopyalandı!";
-                setTimeout(() => copyBtn.innerText = "📋 Kopyala", 2000);
-            } catch (err) {
-                const tempInput = document.createElement("input");
-                tempInput.value = olusturulanUrl;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
-                copyBtn.innerText = "✓ Kopyalandı!";
-                setTimeout(() => copyBtn.innerText = "📋 Kopyala", 2000);
-            }
-        }
+                const response = await fetch(`https://tr.wikipedia.org/api/rest_v1/feed/onthisday/births/${month}/${day}`);
+                if (!response.ok) throw new Error("Wikipedia API hatası");
+                
+                const data = await response.json();
+                ulElement.innerHTML = "";
 
-        function whatsapptaPaylas() {
-            const ad = document.getElementById("inputAd").value.trim() || "Arkadaşım";
-            const metin = `🎂 Sana özel bir doğum günü sürprizi hazırladım! Hemen aç: ${olusturulanUrl}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(metin)}`, '_blank');
+                // Kullanıcının Özel Rozeti
+                const userLi = document.createElement('li');
+                userLi.innerHTML = `
+                    <span class="celeb-name" style="font-weight: 700; color: #ffffff;">✨ Sen (Günün Başkahramanı)</span>
+                    <span class="celeb-year" style="background: ${aktifPalet.userBadge}; color: #ffffff;">${userYear}</span>
+                `;
+                ulElement.appendChild(userLi);
+
+                if (data.births && data.births.length > 0) {
+                    const rastgeleUnluler = data.births
+                        .filter(person => person.year && person.text)
+                        .sort(() => 0.5 - Math.random())
+                        .slice(0, 6);
+
+                    rastgeleUnluler.forEach(person => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span class="celeb-name">${person.text}</span>
+                            <span class="celeb-year">${person.year}</span>
+                        `;
+                        ulElement.appendChild(li);
+                    });
+                } else {
+                    ulElement.innerHTML += `<li><span>Bugün doğan tanınmış kayıt bulunamadı.</span></li>`;
+                }
+
+            } catch (error) {
+                console.error("Wikipedia verisi alınamadı:", error);
+                ulElement.innerHTML = `
+                    <li>
+                        <span class="celeb-name" style="font-weight: 700; color: #fff;">✨ Sen (Günün Başkahramanı)</span>
+                        <span class="celeb-year" style="background: ${aktifPalet.userBadge};">${userYear}</span>
+                    </li>
+                    <li style="justify-content: center; color: #94a3b8; font-size: 0.85rem;">
+                        Tarih verisi alınamadı (İnternet bağlantınızı kontrol edin).
+                    </li>
+                `;
+            }
         }
     </script>
 </body>
 </html>
+
