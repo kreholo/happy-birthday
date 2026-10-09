@@ -20,18 +20,20 @@
             min-height: 100vh;
             overflow-x: hidden;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #180e2e 0%, #29144a 50%, #3e1e69 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             padding: 24px 14px 40px;
             color: #333;
+            /* Canlı tema geçişi için animasyon */
+            transition: background 0.6s ease;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 26px 18px;
             border-radius: 22px;
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
@@ -42,7 +44,7 @@
         }
 
         h2 { 
-            color: #2b1055; 
+            color: #1e1b4b; 
             font-size: 1.55rem;
             margin-bottom: 4px; 
             font-weight: 700;
@@ -92,14 +94,14 @@
         }
 
         input:focus, textarea:focus {
-            border-color: #764ba2;
+            border-color: #6366f1;
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
         textarea {
             resize: none;
-            height: 90px;
+            height: 88px;
             line-height: 1.45;
         }
 
@@ -116,7 +118,7 @@
             border-radius: 12px;
             padding: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -130,9 +132,9 @@
         }
 
         .theme-option.active {
-            border-color: #764ba2;
-            background: #fbf9ff;
-            box-shadow: 0 4px 10px rgba(118, 75, 162, 0.22);
+            border-color: #0f172a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #f8fafc;
         }
 
         .theme-circle {
@@ -148,11 +150,11 @@
         }
 
         .theme-option.active .theme-name {
-            color: #764ba2;
+            color: #0f172a;
+            font-weight: 700;
         }
 
         .btn-submit {
-            background: linear-gradient(135deg, #764ba2, #ff0055);
             color: white;
             border: none;
             padding: 14px 20px;
@@ -161,20 +163,20 @@
             font-size: 0.95rem;
             width: 100%;
             font-weight: 700;
-            transition: transform 0.2s, filter 0.2s;
+            transition: transform 0.2s, filter 0.2s, background 0.4s;
             margin-top: 8px;
-            box-shadow: 0 6px 16px rgba(118, 75, 162, 0.35);
         }
 
         .btn-submit:hover { 
             transform: scale(1.02); 
-            filter: brightness(1.05);
+            filter: brightness(1.06);
         }
 
         .btn-submit:active {
             transform: scale(0.98);
         }
 
+        /* Link Çıktı Kutusu */
         #result-area {
             display: none;
             margin-top: 18px;
@@ -185,25 +187,41 @@
             animation: fadeIn 0.3s ease;
         }
 
-        #result-area p {
-            font-size: 0.85rem;
+        .link-header {
+            font-size: 0.82rem;
             font-weight: 600;
-            color: #334155;
-            margin-bottom: 8px;
+            color: #475569;
+            margin-bottom: 6px;
         }
 
+        /* Tıklanabilir Doğrudan Link */
         #generated-link {
-            word-break: break-all;
-            color: #764ba2;
-            font-size: 0.82rem;
-            margin-bottom: 12px;
             display: block;
-            text-decoration: none;
+            word-break: break-all;
+            color: #2563eb;
+            font-size: 0.83rem;
+            line-height: 1.45;
+            text-decoration: underline;
             background: #ffffff;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            user-select: all;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #generated-link:hover {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .click-hint {
+            display: block;
+            font-size: 0.73rem;
+            color: #059669;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
         .copy-btn {
@@ -267,16 +285,18 @@
 
         <div class="form-group">
             <div class="label-row">
-                <label>🎨 Tema Seçimi:</label>
+                <label>🎨 Tema Seçimi (Canlı Önizleme):</label>
             </div>
             <div class="theme-grid" id="themeContainer"></div>
         </div>
 
-        <button class="btn-submit" onclick="createLink()">Linki Oluştur 🪄</button>
+        <button class="btn-submit" id="submitBtn" onclick="createLink()">Linki Oluştur 🪄</button>
 
         <div id="result-area">
-            <p>👇 Sürpriz linkin hazır!</p>
-            <div id="generated-link">...</div>
+            <div class="link-header">Hazırlanan Bağlantı:</div>
+            <!-- Doğrudan tıklanabilen link -->
+            <a id="generated-link" href="#" target="_blank">...</a>
+            <span class="click-hint">👉 Bağlantıya basarak sayfayı hemen açabilirsin</span>
             <button class="copy-btn" onclick="copyLink()" id="copyButton">Linki Kopyala 📋</button>
         </div>
     </div>
@@ -296,12 +316,48 @@
 
     <script>
         const temalar = [
-            { id: "gece", name: "Kozmik", bg: "radial-gradient(circle, #2b1055, #100524)" },
-            { id: "gunbatimi", name: "Günbatımı", bg: "linear-gradient(135deg, #8e0e00, #1f1c2c)" },
-            { id: "neon", name: "Siber Neon", bg: "linear-gradient(135deg, #090979, #790974)" },
-            { id: "zumrut", name: "Zümrüt", bg: "linear-gradient(135deg, #052e16, #047857)" },
-            { id: "seker", name: "Şeker", bg: "linear-gradient(135deg, #fd1d1d, #fcb045)" },
-            { id: "aurora", name: "Kutup", bg: "linear-gradient(135deg, #0b132b, #5bc0be)" }
+            { 
+                id: "gece", 
+                name: "Kozmik", 
+                bg: "radial-gradient(circle at center, #2b1055, #100524, #05010e)",
+                btn: "linear-gradient(135deg, #ff0055, #ff557f)",
+                btnGlow: "rgba(255, 0, 85, 0.4)"
+            },
+            { 
+                id: "gunbatimi", 
+                name: "Günbatımı", 
+                bg: "linear-gradient(135deg, #4a0033 0%, #8e0e00 50%, #1f1c2c 100%)",
+                btn: "linear-gradient(135deg, #ff416c, #ff4b2b)",
+                btnGlow: "rgba(255, 65, 108, 0.4)"
+            },
+            { 
+                id: "neon", 
+                name: "Siber Neon", 
+                bg: "linear-gradient(135deg, #090979 0%, #000428 50%, #790974 100%)",
+                btn: "linear-gradient(135deg, #00d4ff, #0051ff)",
+                btnGlow: "rgba(0, 212, 255, 0.4)"
+            },
+            { 
+                id: "zumrut", 
+                name: "Zümrüt", 
+                bg: "linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%)",
+                btn: "linear-gradient(135deg, #10b981, #059669)",
+                btnGlow: "rgba(16, 185, 129, 0.4)"
+            },
+            { 
+                id: "seker", 
+                name: "Şeker", 
+                bg: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)",
+                btn: "linear-gradient(135deg, #ff007f, #7928ca)",
+                btnGlow: "rgba(255, 0, 127, 0.4)"
+            },
+            { 
+                id: "aurora", 
+                name: "Kutup", 
+                bg: "linear-gradient(135deg, #0b132b 0%, #1c2541 50%, #5bc0be 100%)",
+                btn: "linear-gradient(135deg, #48cae4, #0077b6)",
+                btnGlow: "rgba(72, 202, 228, 0.4)"
+            }
         ];
 
         let seciliTema = "gece";
@@ -318,6 +374,9 @@
                 `;
                 container.appendChild(opt);
             });
+
+            // Başlangıç temasını sayfaya giydir
+            uygulaTema(seciliTema);
         });
 
         function temaBelirle(temaId) {
@@ -325,6 +384,17 @@
             document.querySelectorAll(".theme-option").forEach((el, index) => {
                 el.classList.toggle("active", temalar[index].id === temaId);
             });
+            uygulaTema(temaId);
+        }
+
+        // Ana sayfanın arka planını ve buton rengini gerçek zamanlı günceller
+        function uygulaTema(temaId) {
+            const tema = temalar.find(t => t.id === temaId) || temalar[0];
+            document.body.style.background = tema.bg;
+            
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.style.background = tema.btn;
+            submitBtn.style.boxShadow = `0 6px 18px ${tema.btnGlow}`;
         }
 
         function guncelleSayac(inputId, counterId, max) {
@@ -354,21 +424,22 @@
 
             const finalLink = `${folderUrl}kutla.html?${params.toString()}`;
 
+            // Link elementini hem tıklanabilir hem görünür yap
             const linkElem = document.getElementById('generated-link');
+            linkElem.href = finalLink;
             linkElem.innerText = finalLink;
 
             document.getElementById('result-area').style.display = 'block';
         }
 
         function copyLink() {
-            const linkText = document.getElementById('generated-link').innerText;
+            const linkText = document.getElementById('generated-link').href;
             const copyBtn = document.getElementById('copyButton');
             
             navigator.clipboard.writeText(linkText).then(() => {
                 copyBtn.innerText = "Kopyalandı! ✓";
                 setTimeout(() => copyBtn.innerText = "Linki Kopyala 📋", 2000);
             }).catch(() => {
-                // Clipboard API engellendiyse klasik yöntem
                 const tempInput = document.createElement("input");
                 tempInput.value = linkText;
                 document.body.appendChild(tempInput);
