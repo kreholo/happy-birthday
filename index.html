@@ -1,86 +1,243 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7220337370405776"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7220337370405776"
+         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sürpriz Oluşturucu ✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-        }
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h2 { color: #333; margin-bottom: 20px; }
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 2px solid #eee;
-            border-radius: 10px;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        *, *::before, *::after {
             box-sizing: border-box;
-            font-family: inherit;
-            transition: 0.3s;
+            margin: 0;
+            padding: 0;
         }
-        input:focus, textarea:focus {
-            border-color: #764ba2;
-            outline: none;
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden; /* Sağa sola taşmayı kesin olarak engeller */
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1338 0%, #301959 50%, #462575 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 24px 14px 40px;
+            color: #333;
         }
+
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            padding: 28px 20px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h2 { 
+            color: #2b1055; 
+            font-size: 1.6rem;
+            margin-bottom: 6px; 
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.88rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
         label {
             display: block;
-            text-align: left;
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 5px;
-            margin-left: 5px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 6px;
+            margin-left: 2px;
         }
-        button {
-            background: #764ba2;
+
+        input, textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+            outline: none;
+            background: #f9fafb;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #764ba2;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        /* Tema Seçim Alanı */
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .theme-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: #fff;
+            user-select: none;
+        }
+
+        .theme-option:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-option.active {
+            border-color: #764ba2;
+            background: #f5f0fb;
+            box-shadow: 0 4px 10px rgba(118, 75, 162, 0.2);
+        }
+
+        .theme-circle {
+            width: 100%;
+            height: 28px;
+            border-radius: 7px;
+        }
+
+        .theme-name {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .theme-option.active .theme-name {
+            color: #764ba2;
+        }
+
+        /* Butonlar */
+        .btn-submit {
+            background: linear-gradient(135deg, #764ba2, #ff0055);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 14px 20px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             width: 100%;
-            font-weight: bold;
+            font-weight: 700;
             transition: 0.3s;
+            margin-top: 8px;
+            box-shadow: 0 6px 16px rgba(118, 75, 162, 0.35);
         }
-        button:hover { transform: scale(1.05); background: #5b3a7d; }
+
+        .btn-submit:hover { 
+            transform: scale(1.02); 
+            filter: brightness(1.05);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
 
         #result-area {
             display: none;
-            margin-top: 20px;
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 18px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 14px;
+            animation: fadeIn 0.3s ease;
         }
+
+        #result-area p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
         #generated-link {
             word-break: break-all;
             color: #764ba2;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 0.82rem;
+            margin-bottom: 12px;
             display: block;
-        }
-        .copy-btn {
-            background: #2ecc71;
+            text-decoration: none;
+            background: #ffffff;
             padding: 10px;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .copy-btn {
+            background: #10b981;
+            color: white;
+        }
+        .copy-btn:hover { background: #059669; }
+
+        .preview-btn {
+            background: #3b82f6;
+            color: white;
+        }
+        .preview-btn:hover { background: #2563eb; }
+
+        /* Reklam Kapsayıcısı - Yatay Taşmayı Önler */
+        .ad-container {
+            width: 100%;
+            max-width: 440px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -88,39 +245,105 @@
 
     <div class="card">
         <h2>🎉 Sürpriz Hazırla</h2>
-        <p>Kutlamak istediğin kişinin bilgilerini gir.</p>
+        <p class="subtitle">Kutlamak istediğin kişinin bilgilerini ve tarzını seç.</p>
 
-        <input type="text" id="nameInput" placeholder="Kimin Doğum Günü? (Örn: Alanur)">
+        <div class="form-group">
+            <label for="nameInput">Kimin Doğum Günü?</label>
+            <input type="text" id="nameInput" placeholder="Örn: Alanur">
+        </div>
         
-        <label for="dateInput">Doğum Tarihi:</label>
-        <input type="date" id="dateInput">
+        <div class="form-group">
+            <label for="dateInput">Doğum Tarihi:</label>
+            <input type="date" id="dateInput">
+        </div>
 
-        <textarea id="noteInput" rows="3" placeholder="Kutlama Mesajın (Örn: İyi ki varsın...)"></textarea>
+        <div class="form-group">
+            <label for="noteInput">Kutlama Mesajın:</label>
+            <textarea id="noteInput" rows="3" placeholder="Örn: Yeni yaşın sana tüm güzellikleri getirsin!"></textarea>
+        </div>
 
-        <button onclick="createLink()">Linki Oluştur 🪄</button>
+        <!-- Renk Seçenekleri -->
+        <div class="form-group">
+            <label>🎨 Sayfa Teması (Renk Geçişi):</label>
+            <div class="theme-grid" id="themeContainer">
+                <!-- Temalar JS ile listelenir -->
+            </div>
+        </div>
+
+        <button class="btn-submit" onclick="createLink()">Linki Oluştur 🪄</button>
 
         <div id="result-area">
-            <p>👇 Bu linki kopyala ve ona gönder:</p>
+            <p>👇 Sürpriz linkin hazır!</p>
             <a id="generated-link" href="#" target="_blank">...</a>
-            <button class="copy-btn" onclick="copyLink()">Linki Kopyala 📋</button>
+            <div class="btn-group">
+                <button class="action-btn copy-btn" onclick="copyLink()" id="copyButton">Kopyala 📋</button>
+                <a class="action-btn preview-btn" id="previewButton" href="#" target="_blank">Önizle 👁️</a>
+            </div>
         </div>
     </div>
 
+    <!-- AdSense Reklam Alanı -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7220337370405776"
+             data-ad-slot="1613768173"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <script>
+        const temalar = [
+            { id: "gece", name: "Kozmik", bg: "radial-gradient(circle, #2b1055, #100524)" },
+            { id: "gunbatimi", name: "Günbatımı", bg: "linear-gradient(135deg, #8e0e00, #1f1c2c)" },
+            { id: "neon", name: "Siber Neon", bg: "linear-gradient(135deg, #090979, #790974)" },
+            { id: "zumrut", name: "Zümrüt", bg: "linear-gradient(135deg, #052e16, #047857)" },
+            { id: "seker", name: "Şeker Pembe", bg: "linear-gradient(135deg, #fd1d1d, #fcb045)" },
+            { id: "aurora", name: "Kutup Işığı", bg: "linear-gradient(135deg, #0b132b, #5bc0be)" }
+        ];
+
+        let seciliTema = "gece";
+
+        // Tema kartlarını arayüze ekle
+        window.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("themeContainer");
+            temalar.forEach((t) => {
+                const opt = document.createElement("div");
+                opt.className = `theme-option ${t.id === seciliTema ? 'active' : ''}`;
+                opt.onclick = () => temaBelirle(t.id);
+                opt.innerHTML = `
+                    <div class="theme-circle" style="background: ${t.bg};"></div>
+                    <span class="theme-name">${t.name}</span>
+                `;
+                container.appendChild(opt);
+            });
+        });
+
+        function temaBelirle(temaId) {
+            seciliTema = temaId;
+            document.querySelectorAll(".theme-option").forEach((el, index) => {
+                el.classList.toggle("active", temalar[index].id === temaId);
+            });
+        }
+
         function createLink() {
             const name = document.getElementById('nameInput').value.trim();
             const note = document.getElementById('noteInput').value.trim();
             const date = document.getElementById('dateInput').value;
 
             if(!name || !note || !date) {
-                alert("Lütfen tüm alanları (isim, tarih ve mesaj) doldur!");
+                alert("Lütfen tüm alanları (isim, doğum tarihi ve mesaj) doldurun!");
                 return;
             }
 
             const params = new URLSearchParams();
             params.set('ad', name);
             params.set('not', note);
-            params.set('tarih', date); // Tarihi de ekledik
+            params.set('tarih', date);
+            params.set('tema', seciliTema); // Seçilen tema kutla.html'e aktarılıyor
 
             let currentUrl = window.location.href.split('?')[0];
             let lastSlashIndex = currentUrl.lastIndexOf('/');
@@ -132,27 +355,18 @@
             linkElem.href = finalLink;
             linkElem.innerText = finalLink;
 
+            document.getElementById('previewButton').href = finalLink;
             document.getElementById('result-area').style.display = 'block';
         }
 
         function copyLink() {
             const linkText = document.getElementById('generated-link').href;
+            const copyBtn = document.getElementById('copyButton');
             navigator.clipboard.writeText(linkText).then(() => {
-                alert("Link kopyalandı! Şimdi arkadaşına atabilirsin. 🚀");
+                copyBtn.innerText = "Kopyalandı! ✓";
+                setTimeout(() => copyBtn.innerText = "Kopyala 📋", 2000);
             });
         }
     </script>
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7220337370405776"
-     crossorigin="anonymous"></script>
-<!-- anasayfa_reklam -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-7220337370405776"
-     data-ad-slot="1613768173"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </body>
 </html>
