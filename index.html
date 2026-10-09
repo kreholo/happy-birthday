@@ -18,9 +18,9 @@
         html, body {
             width: 100%;
             min-height: 100vh;
-            overflow-x: hidden; /* Sağa sola taşmayı kesin olarak engeller */
+            overflow-x: hidden;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e1338 0%, #301959 50%, #462575 100%);
+            background: linear-gradient(135deg, #180e2e 0%, #29144a 50%, #3e1e69 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -32,26 +32,26 @@
         .card {
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
-            padding: 28px 20px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            padding: 26px 18px;
+            border-radius: 22px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
             width: 100%;
             max-width: 440px;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         h2 { 
             color: #2b1055; 
-            font-size: 1.6rem;
-            margin-bottom: 6px; 
+            font-size: 1.55rem;
+            margin-bottom: 4px; 
             font-weight: 700;
         }
 
         .subtitle {
-            font-size: 0.88rem;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 18px;
         }
 
         .form-group {
@@ -59,25 +59,36 @@
             text-align: left;
         }
 
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            padding: 0 2px;
+        }
+
         label {
-            display: block;
             font-size: 0.82rem;
             font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 6px;
-            margin-left: 2px;
+            color: #374151;
+        }
+
+        .char-counter {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         input, textarea {
             width: 100%;
-            padding: 13px 14px;
-            border: 2px solid #e5e7eb;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-family: inherit;
             font-size: 0.92rem;
-            transition: all 0.25s ease;
+            transition: border-color 0.2s, box-shadow 0.2s;
             outline: none;
-            background: #f9fafb;
+            background: #f8fafc;
         }
 
         input:focus, textarea:focus {
@@ -87,11 +98,12 @@
         }
 
         textarea {
-            resize: vertical;
-            min-height: 85px;
+            resize: none;
+            height: 90px;
+            line-height: 1.45;
         }
 
-        /* Tema Seçim Alanı */
+        /* Tema Seçim Tablosu */
         .theme-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -100,7 +112,7 @@
         }
 
         .theme-option {
-            border: 2px solid #e5e7eb;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 6px;
             cursor: pointer;
@@ -108,8 +120,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            background: #fff;
+            gap: 4px;
+            background: #ffffff;
             user-select: none;
         }
 
@@ -119,27 +131,26 @@
 
         .theme-option.active {
             border-color: #764ba2;
-            background: #f5f0fb;
-            box-shadow: 0 4px 10px rgba(118, 75, 162, 0.2);
+            background: #fbf9ff;
+            box-shadow: 0 4px 10px rgba(118, 75, 162, 0.22);
         }
 
         .theme-circle {
             width: 100%;
-            height: 28px;
+            height: 26px;
             border-radius: 7px;
         }
 
         .theme-name {
             font-size: 0.72rem;
             font-weight: 600;
-            color: #4b5563;
+            color: #475569;
         }
 
         .theme-option.active .theme-name {
             color: #764ba2;
         }
 
-        /* Butonlar */
         .btn-submit {
             background: linear-gradient(135deg, #764ba2, #ff0055);
             color: white;
@@ -150,7 +161,7 @@
             font-size: 0.95rem;
             width: 100%;
             font-weight: 700;
-            transition: 0.3s;
+            transition: transform 0.2s, filter 0.2s;
             margin-top: 8px;
             box-shadow: 0 6px 16px rgba(118, 75, 162, 0.35);
         }
@@ -192,47 +203,31 @@
             padding: 10px;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
-        }
-
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .action-btn {
-            padding: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
+            user-select: all;
         }
 
         .copy-btn {
+            width: 100%;
             background: #10b981;
             color: white;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
         }
-        .copy-btn:hover { background: #059669; }
 
-        .preview-btn {
-            background: #3b82f6;
-            color: white;
+        .copy-btn:hover { 
+            background: #059669; 
         }
-        .preview-btn:hover { background: #2563eb; }
 
-        /* Reklam Kapsayıcısı - Yatay Taşmayı Önler */
         .ad-container {
             width: 100%;
             max-width: 440px;
             overflow: hidden;
             border-radius: 12px;
-            margin-top: 10px;
         }
 
         @keyframes fadeIn {
@@ -245,40 +240,44 @@
 
     <div class="card">
         <h2>🎉 Sürpriz Hazırla</h2>
-        <p class="subtitle">Kutlamak istediğin kişinin bilgilerini ve tarzını seç.</p>
+        <p class="subtitle">Arkadaşın için özel kutlama bağlantısı oluştur.</p>
 
         <div class="form-group">
-            <label for="nameInput">Kimin Doğum Günü?</label>
-            <input type="text" id="nameInput" placeholder="Örn: Alanur">
+            <div class="label-row">
+                <label for="nameInput">Kimin Doğum Günü?</label>
+                <span class="char-counter" id="nameCounter">0/25</span>
+            </div>
+            <input type="text" id="nameInput" maxlength="25" placeholder="Örn: Alanur" oninput="guncelleSayac('nameInput', 'nameCounter', 25)">
         </div>
         
         <div class="form-group">
-            <label for="dateInput">Doğum Tarihi:</label>
+            <div class="label-row">
+                <label for="dateInput">Doğum Tarihi:</label>
+            </div>
             <input type="date" id="dateInput">
         </div>
 
         <div class="form-group">
-            <label for="noteInput">Kutlama Mesajın:</label>
-            <textarea id="noteInput" rows="3" placeholder="Örn: Yeni yaşın sana tüm güzellikleri getirsin!"></textarea>
+            <div class="label-row">
+                <label for="noteInput">Kutlama Mesajın:</label>
+                <span class="char-counter" id="noteCounter">0/160</span>
+            </div>
+            <textarea id="noteInput" maxlength="160" placeholder="Örn: Yeni yaşın sana tüm güzellikleri getirsin!" oninput="guncelleSayac('noteInput', 'noteCounter', 160)"></textarea>
         </div>
 
-        <!-- Renk Seçenekleri -->
         <div class="form-group">
-            <label>🎨 Sayfa Teması (Renk Geçişi):</label>
-            <div class="theme-grid" id="themeContainer">
-                <!-- Temalar JS ile listelenir -->
+            <div class="label-row">
+                <label>🎨 Tema Seçimi:</label>
             </div>
+            <div class="theme-grid" id="themeContainer"></div>
         </div>
 
         <button class="btn-submit" onclick="createLink()">Linki Oluştur 🪄</button>
 
         <div id="result-area">
             <p>👇 Sürpriz linkin hazır!</p>
-            <a id="generated-link" href="#" target="_blank">...</a>
-            <div class="btn-group">
-                <button class="action-btn copy-btn" onclick="copyLink()" id="copyButton">Kopyala 📋</button>
-                <a class="action-btn preview-btn" id="previewButton" href="#" target="_blank">Önizle 👁️</a>
-            </div>
+            <div id="generated-link">...</div>
+            <button class="copy-btn" onclick="copyLink()" id="copyButton">Linki Kopyala 📋</button>
         </div>
     </div>
 
@@ -301,13 +300,12 @@
             { id: "gunbatimi", name: "Günbatımı", bg: "linear-gradient(135deg, #8e0e00, #1f1c2c)" },
             { id: "neon", name: "Siber Neon", bg: "linear-gradient(135deg, #090979, #790974)" },
             { id: "zumrut", name: "Zümrüt", bg: "linear-gradient(135deg, #052e16, #047857)" },
-            { id: "seker", name: "Şeker Pembe", bg: "linear-gradient(135deg, #fd1d1d, #fcb045)" },
-            { id: "aurora", name: "Kutup Işığı", bg: "linear-gradient(135deg, #0b132b, #5bc0be)" }
+            { id: "seker", name: "Şeker", bg: "linear-gradient(135deg, #fd1d1d, #fcb045)" },
+            { id: "aurora", name: "Kutup", bg: "linear-gradient(135deg, #0b132b, #5bc0be)" }
         ];
 
         let seciliTema = "gece";
 
-        // Tema kartlarını arayüze ekle
         window.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("themeContainer");
             temalar.forEach((t) => {
@@ -329,13 +327,18 @@
             });
         }
 
+        function guncelleSayac(inputId, counterId, max) {
+            const val = document.getElementById(inputId).value;
+            document.getElementById(counterId).innerText = `${val.length}/${max}`;
+        }
+
         function createLink() {
             const name = document.getElementById('nameInput').value.trim();
             const note = document.getElementById('noteInput').value.trim();
             const date = document.getElementById('dateInput').value;
 
-            if(!name || !note || !date) {
-                alert("Lütfen tüm alanları (isim, doğum tarihi ve mesaj) doldurun!");
+            if (!name || !note || !date) {
+                alert("Lütfen isim, doğum tarihi ve mesaj alanlarını eksiksiz doldurun!");
                 return;
             }
 
@@ -343,30 +346,40 @@
             params.set('ad', name);
             params.set('not', note);
             params.set('tarih', date);
-            params.set('tema', seciliTema); // Seçilen tema kutla.html'e aktarılıyor
+            params.set('tema', seciliTema);
 
-            let currentUrl = window.location.href.split('?')[0];
-            let lastSlashIndex = currentUrl.lastIndexOf('/');
-            let folderUrl = currentUrl.substring(0, lastSlashIndex + 1);
+            const currentUrl = window.location.href.split('?')[0];
+            const lastSlashIndex = currentUrl.lastIndexOf('/');
+            const folderUrl = currentUrl.substring(0, lastSlashIndex + 1);
 
             const finalLink = `${folderUrl}kutla.html?${params.toString()}`;
 
             const linkElem = document.getElementById('generated-link');
-            linkElem.href = finalLink;
             linkElem.innerText = finalLink;
 
-            document.getElementById('previewButton').href = finalLink;
             document.getElementById('result-area').style.display = 'block';
         }
 
         function copyLink() {
-            const linkText = document.getElementById('generated-link').href;
+            const linkText = document.getElementById('generated-link').innerText;
             const copyBtn = document.getElementById('copyButton');
+            
             navigator.clipboard.writeText(linkText).then(() => {
                 copyBtn.innerText = "Kopyalandı! ✓";
-                setTimeout(() => copyBtn.innerText = "Kopyala 📋", 2000);
+                setTimeout(() => copyBtn.innerText = "Linki Kopyala 📋", 2000);
+            }).catch(() => {
+                // Clipboard API engellendiyse klasik yöntem
+                const tempInput = document.createElement("input");
+                tempInput.value = linkText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                copyBtn.innerText = "Kopyalandı! ✓";
+                setTimeout(() => copyBtn.innerText = "Linki Kopyala 📋", 2000);
             });
         }
     </script>
 </body>
 </html>
+
